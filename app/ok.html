@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>興安華城住戶問卷調查統計</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/styles/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/main.css">
+  <!-- endbuild-->
+  <script type="text/javascript" src="/scripts/jquery.min.js" ></script>
+  <!-- endbuild-->
+  
+</head>
+<body>
+   <div class="allpage">
+      <section class="core-selected" >
+
+        <div class="tall-toolbar categories">
+          <div class="row">
+            <div class="col-md-70">
+              <img src="/images/barcode/{{ name }}.png" height="100" width="100">
+            </div>
+            <div class="col-md-30">
+                <div id="qrcode_name">{{ name }}</div>
+            </div>
+          </div>
+        </div>
+        <form>
+        <div class="tiles-container">
+
+          <!--Q1-->
+          <div class="tile">
+            <div class="tile-top">
+              Q1. 是否願意改善我們的停車場管理模式？
+            </div>
+            <div class="row-fluid">
+              <nav class="segmented">
+                <input type="radio" name="q1" value="願意" id="q1A"> 
+                <label for="q1A"> 願意
+                </label>
+                <input type="radio" name="q1" value="不願意" id="q1B"> <label for="q1B" >不願意</label>
+              </nav>
+            </div>
+          </div>
+
+
+
+          <!--q2-->
+          <div class="tile">
+            <div class="tile-top">
+              Q2. 你支持以下何種方式來管理我們的停車場？
+            </div>
+            <div class="row-fluid">
+              <nav class="segmented">
+                
+                <input type="radio" name="q2" value="重新委託" id="q2A"> 
+                <label for="q2A">重新委託
+                </label>
+                <input type="radio" name="q2" value="由住戶成立" id="q2B"> <label for="q2B" >由住戶成立</label>
+                <input type="radio" name="q2" value="維持現狀"  id="q2C"> <label for="q2C"> 維持現狀 </label>
+              </nav>
+            </div>
+          </div>
+
+
+
+          <div class="tile">
+            <div class="tile-top">
+              Q3. 您覺得目前停車場的軟體與硬體哪些急需要改善？(複選)
+            </div>
+            <div class="row-fluid">
+              <nav class="segmented">
+                <input type="radio" name="q3" value="停車場管理人員的素質" id="q3A"> <label for="q3A">停車場管理人員的素質</label>
+                <input type="radio" name="q3" value="透明且公平的使用機制與規則" id="q3B"> <label for="q3B" >透明且公平的使用機制與規則</label>
+                <input type="radio" name="q3" value="環境整潔"  id="q3C"> <label for="q3C">環境整潔</label>
+              </nav>
+            </div>
+          </div>
+
+          <div class="row-fluid">
+
+            <div id="submit_answer" style="float:right;margin-top:20px;">
+              <a class="btn circle">
+                <span class="glyphicon glyphicon-ok"></span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+  <script type="text/javascript">
+    $('.segmented label').click(function(evt){
+      evt.stopPropagation();
+    });
+
+    //
+    $('#submit_answer').click(function(evt){
+      submit_answer_array = []
+      answers = $( "input:checked" )
+      qrcode_name = $('#qrcode_name').text()
+      
+      $.each(answers, function( index, v ) {
+        submit_answer_array.push(v.value)
+      });
+
+      $.ajax({
+          type: 'POST',
+          url: 'https://burnished-yeti-674.appspot.com/_ah/api/vote/v1/u',
+          dataType: 'json',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            name: qrcode_name,
+            q1: submit_answer_array[0],
+            q2: submit_answer_array[1],
+            q3: submit_answer_array[2],
+            }),
+          async:false
+        })
+
+      .done(function(server_response){
+        if (server_response.status == 'used'){
+          window.location.href = '/failed/' + qrcode_name + '/used'  ;
+          console.log('此票問卷編號已經使用過了...')
+        }
+        else if (server_response.status == 'failed'){
+          console.log('非法的QR code...')
+        }
+        else {
+          window.location.href = '/'
+          console.log('驗票成功, 紀錄儲存成功')
+        }
+      }); // .done end
+    });
+  </script>
+
+
+
+</body>
+</html>

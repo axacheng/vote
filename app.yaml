@@ -1,0 +1,48 @@
+application: burnished-yeti-674
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+### Below is for Polymer environments
+- url: /bower_components
+  static_dir: app/bower_components
+
+- url: /elements
+  static_dir: app/elements
+
+- url: /fonts
+  static_dir: app/fonts
+
+- url: /styles
+  static_dir: app/styles
+
+- url: /scripts
+  static_dir: app/scripts
+
+- url: /images
+  static_dir: app/images
+
+
+### Endpoint definition
+- url: /_ah/spi/.*
+  script: api.vote_endpoint.app
+
+### GAE web template
+- url: .*
+  script: main.app
+
+libraries:
+- name: endpoints
+  version: latest
+
+- name: jinja2
+  version: latest
+
+### Deploy
+skip_files:
+- ^(.*/)?app/bower_components/.*
+- ^(.*/)?node_modules/.*
+- ^(.*/)?tool/out/.*
+- ^(.*/)?.git/.*

@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Polymer WebApp</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="/styles/main.css">
+  <!-- endbuild-->
+
+  <script src="/bower_components/platform/platform.js"></script>
+  <!-- build:vulcanized elements/elements.vulcanized.html -->
+
+  <link rel="import" href="/bower_components/paper-radio-group/paper-radio-group.html">
+
+  <link rel="import" href="/elements/elements.html">
+  <!-- endbuild-->
+</head>
+
+<body unresolved>
+
+
+  <div class="hero-unit">
+    <yo-greeting></yo-greeting>
+    <p><b>驗票成功, 紀錄儲存成功 <br>請掃描下一張問卷表，謝謝... </b></p>
+<!--
+<paper-radio-group>
+  <paper-radio-button name="small" label="Small">Small</paper-radio-button>
+  <paper-radio-button name="medium" label="Medium">Medium</paper-radio-button>
+  <paper-radio-button name="large" label="Large">Large</paper-radio-button>
+</paper-radio-group>
+-->
+
+    <yo-list></yo-list>
+  </div>
+
+  <!-- build:js scripts/app.js -->
+  <script src="/scripts/app.js"></script>
+
+
+<script>
+  document.querySelector('paper-radio-group').addEventListener(
+    'core-select', function(event) {
+      //console.log(event.detail.item.label)
+
+      if (event.detail.isSelected == true) {
+        console.log(event.detail.item.label)
+      }
+
+          //alert(e.selectedIndex == 0);
+  });
+</script>
+
+
+
+  <!-- endbuild-->
+</body>
+
+</html>

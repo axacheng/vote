@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>chart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+  </head>
+
+
+  <body>
+    <div class="row-fluid">
+      <div class="span6">
+        <section>
+          <h3>Q1. 是否願意改善我們的停車場管理模式？</h3>
+          <div id="q1" style="width:500px; height: 400px;"></div>
+        </section>
+      </div><!-- span6-->
+    </div>
+    <hr>
+    <div class="row-fluid">
+      <div class="span6">
+        <section>
+          <h3>Q2. 你支持以下何種方式來管理我們的停車場？</h3>
+          <div id="q2" style="width:500px; height: 400px;"></div>
+        </section>
+      </div><!-- span6-->
+    </div>
+    <hr>        
+    <div class="row-fluid">
+      <div class="span6">
+        <section>
+          <h3>Q3. 您覺得目前停車場的軟體與硬體哪些急需要改善？</h3>
+          <div id="q3" style="width:500px; height: 400px;"></div>
+        </section>
+      </div><!-- span6-->
+    </div>
+    <hr>  
+
+  </body>
+  
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart"]});
+
+    // Q1
+    google.setOnLoadCallback(drawQ1);
+    function drawQ1() {
+      var url = '/chart/q1';
+      var query_drawQ1 = new google.visualization.Query(url);
+      query_drawQ1.send(callback_chart_q1);
+
+      function callback_chart_q1(response) {
+        var has_rows_data = response.getDataTable().getNumberOfRows()
+        if (has_rows_data >= 1) {
+          var json_data = response.getDataTable();
+          var json_table = new google.visualization.PieChart(document.getElementById('q1'));
+          var chart_options = { backgroundColor: 'transparent',
+                                legend:{position:'bottom'},
+                                colors: ['#ff8888', '#66cccc', '#3498db'],
+                                is3D: true,
+                              };
+          json_table.draw(json_data, chart_options);
+        }
+        else {
+          $('#q1').append('<p>目前沒有資料</p>')
+        }
+      } // callback_chart_q1 end.
+    } // drawQ1 end.
+
+    // Q2
+    google.setOnLoadCallback(drawQ2);
+    function drawQ2() {
+      var url = '/chart/q2';
+      var query_drawQ2 = new google.visualization.Query(url);
+      query_drawQ2.send(callback_chart_q2);
+
+      function callback_chart_q2(response) {
+        var has_rows_data = response.getDataTable().getNumberOfRows()
+        if (has_rows_data >= 1) {
+          var json_data = response.getDataTable();
+          var json_table = new google.visualization.PieChart(document.getElementById('q2'));
+          var chart_options = { backgroundColor: 'transparent',
+                                legend:{position:'bottom'},
+                                colors: ['#ff8888', '#66cccc', '#3498db'],
+                                is3D: true,
+                              };
+          json_table.draw(json_data, chart_options);
+        }
+        else {
+          $('#q2').append('<p>目前沒有資料</p>')
+        }
+      } // callback_chart_q1 end.
+    } // drawQ2 end.
+
+    // Q3
+    google.setOnLoadCallback(drawQ3);
+    function drawQ3() {
+      var url = '/chart/q3';
+      var query_drawQ3 = new google.visualization.Query(url);
+      query_drawQ3.send(callback_chart_q3);
+
+      function callback_chart_q3(response) {
+        var has_rows_data = response.getDataTable().getNumberOfRows()
+        if (has_rows_data >= 1) {
+          var json_data = response.getDataTable();
+          var json_table = new google.visualization.PieChart(document.getElementById('q3'));
+          var chart_options = { backgroundColor: 'transparent',
+                                legend:{position:'bottom'},
+                                colors: ['#ff8888', '#66cccc', '#3498db'],
+                                is3D: true,
+                              };
+          json_table.draw(json_data, chart_options);
+        }
+        else {
+          $('#q3').append('<p>目前沒有資料</p>')
+        }
+      } // callback_chart_q1 end.
+    } // drawQ3 end.
+
+
+  </script>
+</html>

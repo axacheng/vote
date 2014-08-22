@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>興安華城住戶問卷調查統計</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css styles/main.css -->
+  <link rel="stylesheet" href="/styles/main.css">
+  
+  <script type="text/javascript" src="/scripts/jquery.min.js" ></script>
+
+  <!-- endbuild-->
+
+  <script src="/bower_components/platform/platform.js"></script>
+  <!-- build:vulcanized elements/elements.vulcanized.html -->
+  <link rel="import" href="/elements/elements.html"> 
+  <link href="/bower_components/core-icons/av-icons.html" rel="import">
+  <link href="/bower_components/core-icons/core-icons.html" rel="import">
+  <link href="/bower_components/paper-fab/paper-fab.html" rel="import">
+
+  <link href="/bower_components/core-animated-pages/core-animated-pages.html" rel="import">
+  <link href="/bower_components/core-animated-pages/transitions/slide-up.html" rel="import">
+  <link href="/bower_components/core-animated-pages/transitions/list-cascade.html" rel="import">
+  <link href="/bower_components/paper-button/paper-button.html" rel="import">
+  <!-- endbuild-->
+</head>
+
+<body>
+   <div class="allpage">
+      <section layout="" vertical="" class="core-selected" active="">
+        <div class="tall-toolbar failed" slide-down="">
+          <div class="row">
+            <div class="col-md-7">
+            </div>
+                <p id="errmesg">{{ errmesg }}</p>
+          </div>
+        </div>
+        <div class="failed-img pulse"></div>
+      </section>
+    </div>
+
+  <script type="text/javascript">
+    var errmesg = $(location).attr('pathname').split('/')
+    if (errmesg[3] == 'used') {
+      $('#errmesg').text('此票問卷編號已經使用過了...')
+    }
+
+    else if (errmesg[3] == 'failed') {
+      $('#errmesg').text('非法的QR code...')
+    }
+  </script>
+
+
+</body>
+
+</html>
